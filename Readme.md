@@ -1,4 +1,4 @@
-# FortiGate Secure Network Architecture (LAN / WAN / DMZ) & NGFW Lab (FortiOS 7.6.7)
+# FortiGate Secure Network Architecture (LAN / WAN / DMZ) & NGFW
 
 ![FortiOS](https://img.shields.io/badge/FortiOS-7.6.7-EE3124?style=for-the-badge&logo=fortinet&logoColor=white)
 ![GNS3](https://img.shields.io/badge/Simulation-GNS3-0078D4?style=for-the-badge)
