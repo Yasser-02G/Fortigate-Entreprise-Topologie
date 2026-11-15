@@ -1,0 +1,8 @@
+@"
+GNS3-Topologie/project-files/qemu/
+GNS3-Topologie/project-files/images/
+GNS3-Topologie/project-files/dynamips/*.ghost
+*.vmdk
+*.qcow2
+*.img
+"@ | Out-File -Encoding utf8 .gitignore

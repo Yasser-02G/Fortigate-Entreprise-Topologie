@@ -1,0 +1,39 @@
+config webfilter profile
+    edit "WEB_FILTER_LAN"
+        config ftgd-wf
+            config filters
+                edit 1
+                    set category 26
+                    set action block
+                next
+            end
+        end
+    next
+end
+
+config ips sensor
+    edit "IPS_SERVER_DMZ"
+        config entries
+            edit 1
+                set severity high critical
+                set location server
+                set action block
+            next
+        end
+    next
+end
+
+config firewall policy
+    edit 1
+        set utm-status enable
+        set av-profile "default"
+        set webfilter-profile "WEB_FILTER_LAN"
+        set application-list "default"
+        set ssl-ssh-profile "certificate-inspection"
+    next
+    edit 2
+        set utm-status enable
+        set ips-sensor "IPS_SERVER_DMZ"
+        set ssl-ssh-profile "certificate-inspection"
+    next
+end

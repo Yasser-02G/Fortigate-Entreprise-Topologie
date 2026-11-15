@@ -1,0 +1,33 @@
+config system dns-server
+    edit "port1"
+        set mode recursive
+    next
+    edit "port2"
+        set mode recursive
+    next
+end
+
+config system dns-database
+    edit "Interne"
+        set domain "monlab.local"
+        set view shadow
+        set authoritative disable
+        config dns-entry
+            edit 1
+                set hostname "www"
+                set ip 10.20.20.10
+            next
+        end
+    next
+    edit "Public"
+        set domain "monlab.local"
+        set view public
+        set authoritative enable
+        config dns-entry
+            edit 1
+                set hostname "www"
+                set ip 192.168.75.132
+            next
+        end
+    next
+end

@@ -1,0 +1,76 @@
+config firewall address
+    edit "ADDR_LAN"
+        set subnet 10.10.10.0 255.255.255.0
+    next
+    edit "ADDR_DMZ"
+        set subnet 10.20.20.0 255.255.255.0
+    next
+    edit "ADDR_WEB_DMZ"
+        set subnet 10.20.20.10 255.255.255.255
+    next
+    edit "ADDR_ADMIN"
+        set subnet 10.10.10.20 255.255.255.255
+    next
+end
+
+config firewall vip
+    edit "VIP-WEB-SERVER"
+        set extip 192.168.75.132
+        set mappedip "10.20.20.10"
+        set extintf "port1"
+        set portforward enable
+        set extport 80
+        set mappedport 80
+    next
+end
+
+config firewall policy
+    edit 1
+        set name "LAN-TO-WAN"
+        set srcintf "port2"
+        set dstintf "port1"
+        set action accept
+        set srcaddr "ADDR_LAN"
+        set dstaddr "all"
+        set schedule "always"
+        set service "ALL"
+        set nat enable
+        set logtraffic all
+    next
+    edit 2
+        set name "WAN-TO-DMZ"
+        set srcintf "port1"
+        set dstintf "port3"
+        set action accept
+        set srcaddr "all"
+        set dstaddr "VIP-WEB-SERVER"
+        set schedule "always"
+        set service "HTTP"
+        set nat disable
+        set logtraffic all
+    next
+    edit 3
+        set name "LAN-TO-DMZ-ADMIN"
+        set srcintf "port2"
+        set dstintf "port3"
+        set action accept
+        set srcaddr "ADDR_ADMIN"
+        set dstaddr "ADDR_WEB_DMZ"
+        set schedule "always"
+        set service "SSH" "HTTP" "HTTPS"
+        set nat disable
+        set logtraffic all
+    next
+    edit 4
+        set name "LAN-TO-DMZ-WEB"
+        set srcintf "port2"
+        set dstintf "port3"
+        set action accept
+        set srcaddr "ADDR_LAN"
+        set dstaddr "ADDR_WEB_DMZ"
+        set schedule "always"
+        set service "HTTP" "HTTPS"
+        set nat disable
+        set logtraffic all
+    next
+end
